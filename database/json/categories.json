@@ -1,42 +1,42 @@
 [
     {
         "title": "Category 1",
-        "description": "Description 1",
+        "description": "Description 1"
     },
     {
         "title": "Category 2",
-        "description": "Description 2",
+        "description": "Description 2"
     },
     {
         "title": "Category 3",
-        "description": "Description 3",
+        "description": "Description 3"
     },
     {
         "title": "Category 4",
-        "description": "Description 4",
+        "description": "Description 4"
     },
     {
         "title": "Category 5",
-        "description": "Description 5",
+        "description": "Description 5"
     },
     {
         "title": "Category 6",
-        "description": "Description 6",
+        "description": "Description 6"
     },
     {
         "title": "Category 7",
-        "description": "Description 7",
+        "description": "Description 7"
     },
     {
         "title": "Category 8",
-        "description": "Description 8",
+        "description": "Description 8"
     },
     {
         "title": "Category 9",
-        "description": "Description 9",
+        "description": "Description 9"
     },
     {
         "title": "Category 10",
-        "description": "Description 10",
+        "description": "Description 10"
     }
 ]
