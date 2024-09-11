@@ -14,8 +14,7 @@ class NoticeSeeder extends Seeder
      */
     public function run()
     {
-        // You can use a factory here for bulk data creation
-        \App\Models\Notice::factory()->count(10)->create();
+        
 
         // Or manually seed notices
         Notice::create([

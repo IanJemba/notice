@@ -13,6 +13,6 @@ class notice extends Model
         'title',
         'description',
         'user_id',
-        'categoory_id'
+        'category_id'
     ];
 }
