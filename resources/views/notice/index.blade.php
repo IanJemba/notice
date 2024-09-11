@@ -1,3 +1,3 @@
-<div>
-    <!-- People find pleasure in different ways. I find it in keeping my mind clear. - Marcus Aurelius -->
-</div>
+<x-app-layout>
+    <h1>Hello world</h1>
+</x-app-layout>
