@@ -40,7 +40,8 @@ class CategoryController extends Controller
 
     function update(Category $category)
     {
-        $category->name = request('name');
+        $category->title = request('title');
+        $category->description = request('description');
         $category->save();
 
         return redirect('/categories');

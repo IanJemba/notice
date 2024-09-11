@@ -5,7 +5,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <form action="{{ route('categories.update', $category->id) }}" method="POST">
                         @csrf
-                        @method('PUT')
+                        @method('PATCH')
                         <div class="mb-4">
                             <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title</label>
                             <input type="text" name="title" id="title" value="{{ $category->title }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
