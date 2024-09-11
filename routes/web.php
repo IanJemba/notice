@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoticeController;
@@ -28,5 +29,4 @@ Route::delete('/categories/{category}', [CategoryController::class, 'delete'])->
 
 
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
