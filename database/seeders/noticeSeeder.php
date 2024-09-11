@@ -14,21 +14,17 @@ class NoticeSeeder extends Seeder
      */
     public function run()
     {
-        
+        $notices = json_decode(file_get_contents(database_path('json/notices.json')), true);
 
-        // Or manually seed notices
-        Notice::create([
-            'title' => 'Important Notice 1',
-            'description' => 'This is an important notice for all users.',
-            'user_id' => 1,
-            'category_id' => 1
-        ]);
-
-        Notice::create([
-            'title' => 'General Notice 2',
-            'description' => 'A general notice for everyone.',
-            'user_id' => 2,
-            'category_id' => 2
-        ]);
+        foreach ($notices as $notice) {
+            Notice::create(
+                [
+                    'title' => $notice['title'],
+                    'description' => $notice['description'],
+                    'user_id' => $notice['user_id'],
+                    'category_id' => $notice['category_id'],
+                ]
+            );
+        }
     }
 }
