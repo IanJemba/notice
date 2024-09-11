@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use PHPUnit\Framework\TestStatus\Notice;
 
-class CommentModel extends Model
+class Comment extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
     protected $primaryKey = 'comment_id';
-    protected $fillable = ['content', 'user_id', 'news_id'];
+    protected $fillable = ['content', 'user_id', 'notice_id'];
 
     public function notice()
     {
