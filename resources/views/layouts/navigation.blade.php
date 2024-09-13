@@ -3,7 +3,7 @@
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
             <div class="flex items-center">
-                <div class="logo">
+                <div>
                     <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Cambridge_University_Press_logo.png"
                         alt="Logo" style="width: 100px; height: auto; margin-right: 20px;">
                 </div>
