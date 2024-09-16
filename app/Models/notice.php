@@ -15,4 +15,6 @@ class notice extends Model
         'user_id',
         'category_id'
     ];
+
+    protected $primaryKey = 'notice_id';
 }
