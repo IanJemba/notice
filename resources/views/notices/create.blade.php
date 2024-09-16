@@ -1,46 +1,23 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create Notice') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <form action="{{ route('notices.store') }}" method="POST">
-                        @csrf
+@section('content')
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-4">Create Notice</h1>
 
-                        <div class="mb-4">
-                            <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-                            <input type="text" id="title" name="title" class="mt-1 block w-full"
-                                value="{{ old('title') }}" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                            <textarea id="description" name="description" rows="4" class="mt-1 block w-full" required>{{ old('description') }}</textarea>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="user_id" class="block text-sm font-medium text-gray-700">User ID</label>
-                            <input type="number" id="user_id" name="user_id" class="mt-1 block w-full"
-                                value="{{ old('user_id') }}" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="category_id" class="block text-sm font-medium text-gray-700">Category ID</label>
-                            <input type="number" id="category_id" name="category_id" class="mt-1 block w-full"
-                                value="{{ old('category_id') }}" required>
-                        </div>
-
-                        <button type="submit"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create</button>
-                        <a href="{{ route('notices.index') }}" class="ml-2 text-gray-500">Cancel</a>
-                    </form>
-                </div>
+        <form action="{{ route('notices.store') }}" method="POST">
+            @csrf
+            <div class="mb-4">
+                <label for="title" class="block text-gray-700 font-bold mb-2">Title:</label>
+                <input type="text" id="title" name="title" class="w-full p-2 border border-gray-300 rounded-lg"
+                    required>
             </div>
-        </div>
+            <div class="mb-4">
+                <label for="description" class="block text-gray-700 font-bold mb-2">Description:</label>
+                <textarea id="description" name="description" class="w-full p-2 border border-gray-300 rounded-lg" rows="4"
+                    required></textarea>
+            </div>
+            <button type="submit"
+                class="px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Create</button>
+        </form>
     </div>
-</x-app-layout>
+@endsection
