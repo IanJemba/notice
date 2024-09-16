@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class NoticeController extends Controller
 {
+    // Display a listing of the notices
     public function index()
     {
         $notices = Notice::all();  // Fetch all notices
@@ -22,18 +23,22 @@ class NoticeController extends Controller
     // Store a newly created notice in storage
     public function store(Request $request)
     {
+        // Validate request data
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'user_id' => 'required|exists:users,id',
-            'category_id' => 'required|exists:categories,id',
+            'user_id' => 'required|exists:users,id',  // Ensure user exists
+            'category_id' => 'required|exists:categories,id',  // Ensure category exists
         ]);
 
+        // Create a new notice
         Notice::create($validatedData);
 
+        // Redirect to the notices index page with success message
         return redirect()->route('notices.index')->with('success', 'Notice created successfully');
     }
 
+    // Display the specified notice
     public function show(Notice $notice)
     {
         return view('notices.show', compact('notice'));
@@ -48,22 +53,28 @@ class NoticeController extends Controller
     // Update the specified notice in storage
     public function update(Request $request, Notice $notice)
     {
+        // Validate request data
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'user_id' => 'required|exists:users,id',
-            'category_id' => 'required|exists:categories,id',
+            'user_id' => 'required|exists:users,id',  // Ensure user exists
+            'category_id' => 'required|exists:categories,id',  // Ensure category exists
         ]);
 
+        // Update the notice
         $notice->update($validatedData);
 
+        // Redirect to the notices index page with success message
         return redirect()->route('notices.index')->with('success', 'Notice updated successfully');
     }
 
     // Remove the specified notice from storage
     public function destroy(Notice $notice)
     {
+        // Delete the notice
         $notice->delete();
+
+        // Redirect to the notices index page with success message
         return redirect()->route('notices.index')->with('success', 'Notice deleted successfully');
     }
 }
