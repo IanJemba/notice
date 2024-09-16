@@ -29,7 +29,7 @@ Route::patch('/categories/{category}', [CategoryController::class, 'update'])->n
 Route::delete('/categories/{category}', [CategoryController::class, 'delete'])->name('categories.delete');
 
 // Notices
-Route::get('/notices', [NoticeController::class, 'index'])->name('notices.index');
+Route::resource('notices', [NoticeController::class]);
 
 
 require __DIR__ . '/auth.php';
