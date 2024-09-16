@@ -30,7 +30,7 @@
                                         <a href="{{ route('categories.edit', $category->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
                                     </td>
                                     <td class="border px-4 py-2">
-                                        <form action="{{ route('categories.delete', $category->id) }}" method="POST">
+                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
