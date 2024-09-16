@@ -1,46 +1,51 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create Notice') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <form action="{{ route('notices.store') }}" method="POST">
-                        @csrf
+@section('content')
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-4">Create New Notice</h1>
 
-                        <div class="mb-4">
-                            <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-                            <input type="text" id="title" name="title" class="mt-1 block w-full"
-                                value="{{ old('title') }}" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                            <textarea id="description" name="description" rows="4" class="mt-1 block w-full" required>{{ old('description') }}</textarea>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="user_id" class="block text-sm font-medium text-gray-700">User ID</label>
-                            <input type="number" id="user_id" name="user_id" class="mt-1 block w-full"
-                                value="{{ old('user_id') }}" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="category_id" class="block text-sm font-medium text-gray-700">Category ID</label>
-                            <input type="number" id="category_id" name="category_id" class="mt-1 block w-full"
-                                value="{{ old('category_id') }}" required>
-                        </div>
-
-                        <button type="submit"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create</button>
-                        <a href="{{ route('notices.index') }}" class="ml-2 text-gray-500">Cancel</a>
-                    </form>
-                </div>
+        <form action="{{ route('notices.store') }}" method="POST">
+            @csrf
+            <!-- Title -->
+            <div class="mb-4">
+                <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+                <input type="text" name="title" id="title" class="block w-full border-gray-300 rounded-md shadow-sm"
+                    required>
             </div>
-        </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+                <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                <textarea name="description" id="description" rows="4" class="block w-full border-gray-300 rounded-md shadow-sm"
+                    required></textarea>
+            </div>
+
+            <!-- Category -->
+            <div class="mb-4">
+                <label for="category_id" class="block text-sm font-medium text-gray-700">Category</label>
+                <select name="category_id" id="category_id" class="block w-full border-gray-300 rounded-md shadow-sm"
+                    required>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- User (Author) -->
+            <div class="mb-4">
+                <label for="user_id" class="block text-sm font-medium text-gray-700">Author</label>
+                <select name="user_id" id="user_id" class="block w-full border-gray-300 rounded-md shadow-sm" required>
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit"
+                class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">
+                Submit
+            </button>
+        </form>
     </div>
-</x-app-layout>
+@endsection
