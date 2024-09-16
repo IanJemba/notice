@@ -1,58 +1,57 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Notices') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-
-                    <table class="table-auto w-full">
-                        <thead>
-                            <tr>
-                                <th class="px-4 py-2">#</th>
-                                <th class="px-4 py-2">Title</th>
-                                <th class="px-4 py-2">Description</th>
-                                <th class="px-4 py-2">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($notices as $notice)
-                                <tr>
-                                    <td class="border px-4 py-2">{{ $notice->id }}</td>
-                                    <td class="border px-4 py-2">{{ $notice->title }}</td>
-                                    <td class="border px-4 py-2">{{ Str::limit($notice->description, 50) }}</td>
-                                    <td class="border px-4 py-2">
-                                        <a href="{{ route('notices.show', $notice->id) }}"
-                                            class="text-blue-500">View</a>
-                                        <a href="{{ route('notices.edit', $notice->id) }}"
-                                            class="text-yellow-500 ml-2">Edit</a>
-                                        <form action="{{ route('notices.destroy', $notice->id) }}" method="POST"
-                                            class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-500 ml-2"
-                                                onclick="return confirm('Are you sure you want to delete this notice?');">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
-                    <a href="{{ route('notices.create') }}"
-                        class="mt-4 inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create
-                        New Notice</a>
+@section('content')
+    @if (session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Error!</strong>
+            <span class="block sm:inline">{{ session('error') }}</span>
+        </div>
+    @endif
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-4">Notices</h1>
+        {{-- @if (auth()->check() && auth()->user()->role == 'author') --}}
+        <a href="{{ route('notices.create') }}"
+            class="inline-flex items-center px-3 py-2 mb-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Create Notice
+        </a>
+        {{-- @endif --}}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach ($notices as $notice)
+                <div
+                    class="p-6 bg-white border border-gray-200 rounded-lg shadow-md transition-transform duration-300 transform hover:scale-105 hover:shadow-xl">
+                    <a href="{{ route('notices.show', $notice->notice_id) }}">
+                        <h5 class="mb-2 text-xl font-semibold text-gray-900">{{ $notice->title }}</h5>
+                    </a>
+                    <p class="mb-3 text-sm text-gray-700">{{ $notice->description }}</p>
+                    <div class="flex items-center justify-between">
+                        <a href="{{ route('notices.show', $notice->notice_id) }}"
+                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Read more
+                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M1 5h12m0 0L9 1m4 4L9 9" />
+                            </svg>
+                        </a>
+                        {{-- @if (auth()->check() && auth()->user()->role == 'author' && $notice->user_id == auth()->user()->id) --}}
+                        <a href="{{ route('notices.edit', $notice->notice_id) }}"
+                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-700 bg-blue-200 rounded-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                            Edit
+                        </a>
+                        <form action="{{ route('notices.destroy', $notice->notice_id) }}" method="POST"
+                            class="inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                                onclick="return confirm('Are you sure you want to delete this item?');">
+                                Delete
+                            </button>
+                        </form>
+                        {{-- @endif --}}
+                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
-</x-app-layout>
+@endsection

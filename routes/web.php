@@ -27,6 +27,6 @@ Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->
 Route::patch('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
 Route::delete('/categories/{category}', [CategoryController::class, 'delete'])->name('categories.delete');
 
-
+Route::resource('notices', NoticeController::class);
 
 require __DIR__ . '/auth.php';

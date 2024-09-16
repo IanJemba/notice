@@ -7,10 +7,9 @@ use Illuminate\Http\Request;
 
 class NoticeController extends Controller
 {
-    // Display a listing of notices
     public function index()
     {
-        $notices = Notice::all();
+        $notices = Notice::all();  // Fetch all notices
         return view('notices.index', compact('notices'));
     }
 
@@ -35,7 +34,6 @@ class NoticeController extends Controller
         return redirect()->route('notices.index')->with('success', 'Notice created successfully');
     }
 
-    // Display the specified notice
     public function show(Notice $notice)
     {
         return view('notices.show', compact('notice'));
