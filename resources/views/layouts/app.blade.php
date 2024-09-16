@@ -31,7 +31,7 @@
 
         <div class="content">
             <!-- Ensure the main content is defined as a section -->
-            @yield('content')
+           {{ $slot }}
         </div>
     </div>
 </body>
