@@ -17,4 +17,6 @@ class notice extends Model
     ];
 
     protected $primaryKey = 'notice_id';
+
+    
 }
