@@ -9,11 +9,11 @@ class notice extends Model
 {
     use HasFactory;
 
-    protected $fillables = [
+    protected $fillable = [
         'title',
         'description',
         'user_id',
-        'category_id'
+        'category_id',
     ];
 
     protected $primaryKey = 'notice_id';

@@ -32,8 +32,8 @@ class NoticeController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'user_id' => 'required|exists:users,id',  // Ensure user exists
-            'category_id' => 'required|exists:categories,id',  // Ensure category exists
+            'user_id' => 'required|exists:users,id',  
+            'category_id' => 'required|exists:categories,id',  
         ]);
 
         // Create a new notice
