@@ -17,24 +17,24 @@
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300">
                     Back to Notices
                 </a>
-                {{-- @if (auth()->check() && auth()->user()->role == 'author' && $notice->user_id == auth()->user()->id) --}}
-                <div>
-                    <a href="{{ route('notices.edit', $notice->notice_id) }}"
-                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-700 bg-blue-200 rounded-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                        Edit
-                    </a>
-                    <form action="{{ route('notices.destroy', $notice->notice_id) }}" method="POST"
-                        class="inline-block ml-2">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                            onclick="return confirm('Are you sure you want to delete this item?');">
-                            Delete
-                        </button>
-                    </form>
-                </div>
-                {{-- @endif --}}
+                @if (auth()->check() && auth()->user()->role == 'author' && $notice->user_id == auth()->user()->id)
+                    <div>
+                        <a href="{{ route('notices.edit', $notice->notice_id) }}"
+                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-700 bg-blue-200 rounded-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                            Edit
+                        </a>
+                        <form action="{{ route('notices.destroy', $notice->notice_id) }}" method="POST"
+                            class="inline-block ml-2">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                                onclick="return confirm('Are you sure you want to delete this item?');">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -71,20 +71,20 @@
                 <p class="text-gray-700">No comments yet.</p>
             @endif
 
-            {{-- @if (auth()->check()) --}}
-            <form action="{{ route('comments.store', $notice->notice_id) }}" method="POST" class="mt-4">
-                @csrf
-                <div class="mb-4">
-                    <label for="content" class="block text-sm font-medium text-gray-700">Add a Comment:</label>
-                    <textarea id="content" name="content" rows="3"
-                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required></textarea>
-                </div>
-                <button type="submit"
-                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                    Submit
-                </button>
-            </form>
-            {{-- @endif --}}
+            @if (auth()->check())
+                <form action="{{ route('comments.store', $notice->notice_id) }}" method="POST" class="mt-4">
+                    @csrf
+                    <div class="mb-4">
+                        <label for="content" class="block text-sm font-medium text-gray-700">Add a Comment:</label>
+                        <textarea id="content" name="content" rows="3"
+                            class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required></textarea>
+                    </div>
+                    <button type="submit"
+                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                        Submit
+                    </button>
+                </form>
+            @endif
         </div>
     </div>
 </x-app-layout>
