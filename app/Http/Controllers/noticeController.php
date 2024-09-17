@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Notice;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NoticeController extends Controller
@@ -17,7 +19,10 @@ class NoticeController extends Controller
     // Show the form for creating a new notice
     public function create()
     {
-        return view('notices.create');
+        $categories = Category::all(); // Get all categories
+        $users = User::all();
+
+        return view('notices.create', compact('categories', 'users'));
     }
 
     // Store a newly created notice in storage

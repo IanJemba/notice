@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-4">Create New Notice</h1>
 
@@ -9,8 +7,8 @@
             <!-- Title -->
             <div class="mb-4">
                 <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-                <input type="text" name="title" id="title" class="block w-full border-gray-300 rounded-md shadow-sm"
-                    required>
+                <input type="text" name="title" id="title"
+                    class="block w-full border-gray-300 rounded-md shadow-sm" required>
             </div>
 
             <!-- Description -->
@@ -34,7 +32,8 @@
             <!-- User (Author) -->
             <div class="mb-4">
                 <label for="user_id" class="block text-sm font-medium text-gray-700">Author</label>
-                <select name="user_id" id="user_id" class="block w-full border-gray-300 rounded-md shadow-sm" required>
+                <select name="user_id" id="user_id" class="block w-full border-gray-300 rounded-md shadow-sm"
+                    required>
                     @foreach ($users as $user)
                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                     @endforeach
@@ -48,4 +47,4 @@
             </button>
         </form>
     </div>
-@endsection
+</x-app-layout>
