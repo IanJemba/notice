@@ -30,10 +30,11 @@
 
                     $color = $colors[mt_rand(0, count($colors) - 1)];
 
-                    $size = ($loop->iteration % 3 == 0) ? 'lg:col-span-2' : 'w-full';
+                    $size = $loop->iteration % 3 == 0 ? 'lg:col-span-2' : 'w-full';
                 @endphp
 
-                <div class="{{ $color }} {{ $size }} p-6 shadow-lg rounded-lg transform hover:scale-105 transition-transform duration-300">
+                <div
+                    class="{{ $color }} {{ $size }} p-6 shadow-lg rounded-lg transform hover:scale-105 transition-transform duration-300">
                     <a href="{{ route('notices.show', $notice->notice_id) }}">
                         <h5 class="mb-2 text-2xl font-bold text-gray-900">{{ $notice->title }}</h5>
                     </a>
@@ -56,7 +57,8 @@
                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-700 bg-blue-200 rounded-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300">
                             Edit
                         </a>
-                        <form action="{{ route('notices.destroy', $notice->notice_id) }}" method="POST" class="inline-block">
+                        <form action="{{ route('notices.destroy', $notice->notice_id) }}" method="POST"
+                            class="inline-block">
                             @csrf
                             @method('DELETE')
                             <button type="submit"
