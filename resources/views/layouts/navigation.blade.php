@@ -29,6 +29,9 @@
                         <x-nav-link :href="route('notices.index')" :active="request()->routeIs('notices.index')">
                             {{ __('Notices') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.index')" :active="request()->RouteIs('admin.index')">
+                            {{ __('Admin') }}
+                        </x-nav-link>
                         @else
                         <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
                             {{ __('Login') }}

@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoticeController;
@@ -21,12 +21,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Categories
 Route::resource('categories', CategoryController::class);
-
 Route::resource('notices', NoticeController::class);
-
 Route::resource('comments', CommentController::class);
+
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+Route::get('/admin/users/create', [AdminController::class, 'userCreate'])->name('admin.users.create');
+Route::get('/admin/users/{id}/edit', [AdminController::class, 'userEdit'])->name('admin.users.edit');
+Route::get('/admin/users/{id}/delete', [AdminController::class, 'userDelete'])->name('admin.users.delete');
+
+Route::patch('/admin/users/update', [AdminController::class, 'userUpdate'])->name('admin.users.update');
 
 
 require __DIR__ . '/auth.php';
