@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6">
+        {{-- <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6">
             <h2 class="text-2xl font-bold mb-4">Comments</h2>
 
             @if ($notice->comments && $notice->comments->count() > 0)
@@ -86,5 +86,5 @@
                 </form>
             @endif
         </div>
-    </div>
+    </div> --}}
 </x-app-layout>
