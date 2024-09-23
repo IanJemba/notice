@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        {{-- <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6">
+        <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6">
             <h2 class="text-2xl font-bold mb-4">Comments</h2>
 
             @if ($notice->comments && $notice->comments->count() > 0)
@@ -49,11 +49,11 @@
                             {{ $comment->created_at->format('M d, Y') }}</div>
                         @if (auth()->check() && auth()->user()->id == $comment->user_id)
                             <div class="mt-2">
-                                <a href="{{ route('comments.edit', $comment->comment_id) }}"
+                                <a href="{{ route('comments.edit', $comment->id) }}"
                                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-700 bg-blue-200 rounded-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300">
                                     Edit
                                 </a>
-                                <form action="{{ route('comments.destroy', $comment->comment_id) }}" method="POST"
+                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST"
                                     class="inline-block ml-2">
                                     @csrf
                                     @method('DELETE')
@@ -86,5 +86,5 @@
                 </form>
             @endif
         </div>
-    </div> --}}
+    </div>
 </x-app-layout>

@@ -1,9 +1,10 @@
 <x-app-layout>
+
     <div class="container mx-auto px-4">
         <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold mb-4">Edit Comment</h2>
 
-            <form action="{{ route('comments.update', $comment->comment_id) }}" method="POST">
+            <form action="{{ route('comments.update', $comment->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="mb-4">

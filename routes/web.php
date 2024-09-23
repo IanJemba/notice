@@ -27,6 +27,8 @@ Route::resource('categories', CategoryController::class);
 Route::resource('notices', NoticeController::class);
 
 Route::resource('comments', CommentController::class);
+Route::post('/notices/{notice}/comments', [CommentController::class, 'store'])->name('comments.store');
+
 
 
 require __DIR__ . '/auth.php';
