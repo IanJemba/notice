@@ -26,18 +26,35 @@ class AdminController extends Controller
         return view('admin.user.create');
     }
 
-    public function userEdit(User $user)
+    public function userEdit($user)
     {
+        $user = User::find($user);
+
         return view('admin.user.edit', compact('user'));
     }
 
-    public function userDelete(User $user)
+    public function userDelete($user)
     {
-        return view('admin.user.delete');
+        $user = User::find($user);
+        return view('admin.user.delete', compact('user'));
+    }
+
+    public function userDestroy(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->delete();
+
+        return redirect('/admin/users');
     }
 
     public function userUpdate(Request $request)
     {
-        dd($request->all());
+        $user = User::find($request->id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        $user->save();
+
+        return redirect('/admin/users');
     }
 }

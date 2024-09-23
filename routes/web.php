@@ -32,6 +32,7 @@ Route::get('/admin/users/{id}/edit', [AdminController::class, 'userEdit'])->name
 Route::get('/admin/users/{id}/delete', [AdminController::class, 'userDelete'])->name('admin.users.delete');
 
 Route::patch('/admin/users/update', [AdminController::class, 'userUpdate'])->name('admin.users.update');
+Route::delete('/admin/users/destroy', [AdminController::class, 'userDestroy'])->name('admin.users.destroy');
 
 
 require __DIR__ . '/auth.php';

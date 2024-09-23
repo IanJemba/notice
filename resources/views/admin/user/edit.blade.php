@@ -11,7 +11,8 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <form method="POST" action="{{ route('admin.users.update', $user->id) }}">
                         @csrf
-                        @method('PUT')
+                        @method('PATCH')
+                        <input type="hidden" name="id" value="{{ $user->id }}">
                         <div class="mb-4">
                             <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
                             <input type="text" name="name" id="name" value="{{ $user->name }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">

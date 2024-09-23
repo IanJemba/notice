@@ -29,7 +29,7 @@
                                     <td class="border px-4 py-2">
                                         <a href="{{ route('admin.users.edit', $user->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
                                         <a href="{{ route('admin.users.delete', $user->id) }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</a>
-                                        <a href="" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">View notices (TODO)</a>
+                                        {{-- <a href="" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">View notices</a> --}}
                                     </td>
                                 </tr>
                             @endforeach
