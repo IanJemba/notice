@@ -8,7 +8,7 @@
     @php
         $totalUsers = $statistics['users'];
         $totalNotices = $statistics['notices'];
-        // $totalComments = $statistics['comments'];
+        $totalComments = $statistics['comments'];
         $totalCategories = $statistics['categories'];
     @endphp
 
@@ -32,7 +32,7 @@
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                             {{ __('Comments') }}
                         </h2>
-                        <p class="text-3xl text-gray-800">{{-- {{ $totalComments }} --}}FIXME</p>
+                        <p class="text-3xl text-gray-800">{{ $totalComments }}</p>
                     </div>
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-5">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight">

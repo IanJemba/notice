@@ -66,7 +66,7 @@ class AdminController extends Controller
         $statistics = [
             'users' => User::count(),
             'notices' => Notice::count(),
-            // 'comments' => Comment::count(),
+            'comments' => Comment::count(),
             'categories' => Category::count(),
         ];
 
