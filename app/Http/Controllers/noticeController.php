@@ -32,8 +32,8 @@ class NoticeController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'user_id' => 'required|exists:users,id',  
-            'category_id' => 'required|exists:categories,id',  
+            'user_id' => 'required|exists:users,id',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         // Create a new notice
@@ -52,7 +52,10 @@ class NoticeController extends Controller
     // Show the form for editing the specified notice
     public function edit(Notice $notice)
     {
-        return view('notices.edit', compact('notice'));
+        $categories = Category::all(); // Get all categories
+        $users = User::all();
+
+        return view('notices.edit', compact('notice', 'categories', 'users'));
     }
 
     // Update the specified notice in storage

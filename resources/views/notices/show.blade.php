@@ -6,10 +6,14 @@
 
             <div class="mt-4">
                 <h2 class="text-lg font-semibold mb-2">Category:</h2>
-                {{-- <div class="flex flex-wrap gap-1">
+                <div class="flex flex-wrap gap-1">
                     <span
                         class="inline-block bg-gray-100 text-gray-800 px-2 py-1 text-xs font-semibold rounded-full">{{ $notice->category->title }}</span>
-                </div> --}}
+                </div>
+                <div class="flex flex-wrap gap-1">
+                    <span
+                        class="inline-block bg-gray-100 text-gray-800 px-2 py-1 text-xs font-semibold rounded-full">{{ $notice->user->name }}</span>
+                </div>
             </div>
 
             <div class="flex items-center justify-between mt-6">
