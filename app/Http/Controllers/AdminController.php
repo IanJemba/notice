@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Notice;
+use App\Models\Comment;
+use App\Models\Category;
 
 class AdminController extends Controller
 {
@@ -56,5 +59,17 @@ class AdminController extends Controller
         $user->save();
 
         return redirect('/admin/users');
+    }
+
+    public function statistics()
+    {
+        $statistics = [
+            'users' => User::count(),
+            'notices' => Notice::count(),
+            // 'comments' => Comment::count(),
+            'categories' => Category::count(),
+        ];
+
+        return view('admin.statistics', compact('statistics'));
     }
 }

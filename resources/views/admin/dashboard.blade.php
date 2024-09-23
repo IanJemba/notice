@@ -11,8 +11,14 @@
                 <div class="p-6 text-gray-900">
                     <p>Admin dashboard</p>
 
+                    {{-- User management --}}
                     <div class="mt-6">
                         <a href="{{ route('admin.users') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Manage Users</a>
+                    </div>
+
+                    {{-- Statistics --}}
+                    <div class="mt-6">
+                        <a href="{{ route('admin.statistics') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">View Statistics</a>
                     </div>
                 </div>
             </div>
