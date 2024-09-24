@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Notice;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NoticeController extends Controller
 {
@@ -20,9 +20,7 @@ class NoticeController extends Controller
     public function create()
     {
         $categories = Category::all(); // Get all categories
-        $users = User::all();
-
-        return view('notices.create', compact('categories', 'users'));
+        return view('notices.create', compact('categories'));
     }
 
     // Store a newly created notice in storage
@@ -32,9 +30,11 @@ class NoticeController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'user_id' => 'required|exists:users,id',
             'category_id' => 'required|exists:categories,id',
         ]);
+
+        // Automatically set the logged-in user as the author
+        $validatedData['user_id'] = Auth::id();
 
         // Create a new notice
         Notice::create($validatedData);
@@ -53,9 +53,7 @@ class NoticeController extends Controller
     public function edit(Notice $notice)
     {
         $categories = Category::all(); // Get all categories
-        $users = User::all();
-
-        return view('notices.edit', compact('notice', 'categories', 'users'));
+        return view('notices.edit', compact('notice', 'categories'));
     }
 
     // Update the specified notice in storage
@@ -65,11 +63,10 @@ class NoticeController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'user_id' => 'required|exists:users,id',  // Ensure user exists
-            'category_id' => 'required|exists:categories,id',  // Ensure category exists
+            'category_id' => 'required|exists:categories,id',
         ]);
 
-        // Update the notice
+        // Update the notice without changing the author
         $notice->update($validatedData);
 
         // Redirect to the notices index page with success message

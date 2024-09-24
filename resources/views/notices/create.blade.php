@@ -29,17 +29,6 @@
                 </select>
             </div>
 
-            <!-- User (Author) -->
-            <div class="mb-4">
-                <label for="user_id" class="block text-sm font-medium text-gray-700">Author</label>
-                <select name="user_id" id="user_id" class="block w-full border-gray-300 rounded-md shadow-sm"
-                    required>
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
             <!-- Submit Button -->
             <button type="submit"
                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">
