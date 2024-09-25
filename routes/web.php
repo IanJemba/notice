@@ -6,13 +6,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Models\notice;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $latestNotice = Notice::latest()->first();
+    return view('dashboard', compact('latestNotice'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
