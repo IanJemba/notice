@@ -34,6 +34,8 @@ Route::get('/admin/users/create', [AdminController::class, 'userCreate'])->name(
 Route::get('/admin/users/{id}/edit', [AdminController::class, 'userEdit'])->name('admin.users.edit');
 Route::get('/admin/users/{id}/delete', [AdminController::class, 'userDelete'])->name('admin.users.delete');
 
+
+Route::post('/admin/users/store', [AdminController::class, 'userStore'])->name('admin.users.store');
 Route::patch('/admin/users/update', [AdminController::class, 'userUpdate'])->name('admin.users.update');
 Route::delete('/admin/users/destroy', [AdminController::class, 'userDestroy'])->name('admin.users.destroy');
 
