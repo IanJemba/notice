@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Notice;
 use App\Models\Comment;
@@ -22,11 +28,6 @@ class AdminController extends Controller
         $users = User::all();
 
         return view('admin.user.index', compact('users'));
-    }
-
-    public function userCreate()
-    {
-        return view('admin.user.create');
     }
 
     public function userEdit($user)
@@ -71,5 +72,30 @@ class AdminController extends Controller
         ];
 
         return view('admin.statistics', compact('statistics'));
+    }
+
+    public function userCreate()
+    {
+        return view('admin.user.create');
+    }
+
+    public function userStore(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $admin = isset($request->is_admin) ? 'admin' : 'user';
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $admin,
+        ]);
+
+        event(new Registered($user));
+        return redirect('/admin/users');
     }
 }
