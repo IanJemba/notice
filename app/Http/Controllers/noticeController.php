@@ -4,23 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Notice;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class NoticeController extends Controller
 {
-    // Display a listing of the notices
-    public function index()
+    public function index(Request $request)
     {
-        $notices = Notice::all();  // Fetch all notices
-        return view('notices.index', compact('notices'));
+        $query = Notice::query();
+
+        // If a search term is present, filter by title
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        // If a category is selected, filter by category
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        $notices = $query->get(); // Get the filtered notices
+        $categories = Category::all(); // Fetch all categories for the dropdown
+
+        return view('notices.index', compact('notices', 'categories'));
     }
+
 
     // Show the form for creating a new notice
     public function create()
     {
         $categories = Category::all(); // Get all categories
-        return view('notices.create', compact('categories'));
+        $users = User::all();
+
+        return view('notices.create', compact('categories', 'users'));
     }
 
     // Store a newly created notice in storage
@@ -53,7 +70,9 @@ class NoticeController extends Controller
     public function edit(Notice $notice)
     {
         $categories = Category::all(); // Get all categories
-        return view('notices.edit', compact('notice', 'categories'));
+        $users = User::all();
+
+        return view('notices.edit', compact('notice', 'categories', 'users'));
     }
 
     // Update the specified notice in storage
@@ -63,10 +82,11 @@ class NoticeController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
+            'user_id' => 'required|exists:users,id',  // Ensure user exists
+            'category_id' => 'required|exists:categories,id',  // Ensure category exists
         ]);
 
-        // Update the notice without changing the author
+        // Update the notice
         $notice->update($validatedData);
 
         // Redirect to the notices index page with success message
