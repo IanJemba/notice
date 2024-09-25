@@ -2,9 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Notice;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,17 +18,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Default admin user
+        // admin@admin.nl
+        // qwertyuiop
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Admin',
+            'email' => 'admin@admin.nl',
+            'email_verified_at' => now(),
+            'password' => Hash::make('qwertyuiop'),
+            'remember_token' => Str::random(10),
+            'role' => 'admin',
         ]);
-
-        $this->call([
-            CategoriesSeeder::class,
-            NoticeSeeder::class,
-            CommentSeeder::class,
-        ]);
+        User::factory(10)->create();
+        Category::factory(10)->create();
+        Notice::factory(10)->create();
+        Comment::factory(15)->create();
     }
 }
