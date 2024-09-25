@@ -2,16 +2,18 @@
     <!-- Header Section -->
     <header class="bg-white shadow">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            <div class="flex items-center">
-                <div>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Cambridge_University_Press_logo.png"
-                        alt="Logo" style="width: 100px; height: auto; margin-right: 20px;">
+            <a class="p-4" href="{{ auth()->check() ? route('dashboard') : route('welcome') }}">
+                <div class="flex items-center">
+                    <div>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/bf/Cambridge_University_Press_logo.png"
+                            alt="Logo" style="width: 100px; height: auto; margin-right: 20px;">
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">School Notice Board</h1>
+                        <p class="text-gray-600">Stay updated with the latest notices, events, and announcements</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="text-3xl font-bold text-gray-900">School Notice Board</h1>
-                    <p class="text-gray-600">Stay updated with the latest notices, events, and announcements</p>
-                </div>
-            </div>
+            </a>
 
             <!-- Navigation Section -->
             <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">

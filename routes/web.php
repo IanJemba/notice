@@ -10,7 +10,7 @@ use App\Models\notice;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     $latestNotice = Notice::latest()->first();
