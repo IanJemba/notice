@@ -38,6 +38,11 @@ class NoticeController extends Controller
         $categories = Category::all(); // Get all categories
         $users = User::all();
 
+        // check if logged in
+        if (!Auth::check()) {
+            return redirect()->route('notices.index')->with('error', 'You must be logged in to create a notice');
+        }
+
         return view('notices.create', compact('categories', 'users'));
     }
 
@@ -50,6 +55,11 @@ class NoticeController extends Controller
             'description' => 'required|string',
             'category_id' => 'required|exists:categories,id',
         ]);
+
+        // verify if user is logged in
+        if (!Auth::check()) {
+            return redirect()->route('notices.index')->with('error', 'You must be logged in to create a notice');
+        }
 
         // Automatically set the logged-in user as the author
         $validatedData['user_id'] = Auth::id();

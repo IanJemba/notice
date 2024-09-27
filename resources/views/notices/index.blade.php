@@ -1,9 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold mb-6 text-center">Notice Board</h1>
-
-
-
         <form action="{{ route('notices.index') }}" method="GET" class="mb-6">
             <div class="flex justify-center mb-6 space-x-4">
                 <input type="text" name="search" placeholder="Search notices by title..."
@@ -25,10 +22,11 @@
         </form>
 
         <div class="text-center mb-6">
-            <a href="{{ route('notices.create') }}"
-                class="inline-flex items-center px-4 py-2 text-lg font-medium text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                + Create New Notice
+            @auth
+            <a href="{{ route('notices.create') }}" class="inline-flex items-center px-4 py-2 text-lg font-medium text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
+            + Create New Notice
             </a>
+            @endauth
         </div>
 
         <!-- Notices Grid -->
