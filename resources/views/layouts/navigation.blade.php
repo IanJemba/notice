@@ -25,12 +25,14 @@
                             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                                 {{ __('Dashboard') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
-                                {{ __('Categories') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('notices.index')" :active="request()->routeIs('notices.index')">
-                                {{ __('Notices') }}
-                            </x-nav-link>
+                        @endauth
+                        <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
+                            {{ __('Categories') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('notices.index')" :active="request()->routeIs('notices.index')">
+                            {{ __('Notices') }}
+                        </x-nav-link>
+                        @auth
                             @if (Auth::check() && Auth::user()->role === 'admin')
                                 <x-nav-link :href="route('admin.index')" :active="request()->RouteIs('admin.index')">
                                     {{ __('Admin') }}
