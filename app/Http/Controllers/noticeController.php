@@ -27,6 +27,7 @@ class NoticeController extends Controller
         $notices = $query->get(); // Get the filtered notices
         $categories = Category::all(); // Fetch all categories for the dropdown
 
+        $notices = $notices->sortByDesc('created_at');
         return view('notices.index', compact('notices', 'categories'));
     }
 
@@ -72,6 +73,10 @@ class NoticeController extends Controller
         $categories = Category::all(); // Get all categories
         $users = User::all();
 
+        if (Auth::id() !== $notice->user_id) {
+            return redirect()->route('notices.show', $notice->notice_id)->with('error', 'You do not have permission to edit this notice');
+        }
+
         return view('notices.edit', compact('notice', 'categories', 'users'));
     }
 
@@ -85,6 +90,10 @@ class NoticeController extends Controller
             'user_id' => 'required|exists:users,id',  // Ensure user exists
             'category_id' => 'required|exists:categories,id',  // Ensure category exists
         ]);
+
+        if (Auth::id() !== $notice->user_id) {
+            return redirect()->route('notices.show', $notice->notice_id)->with('error', 'You do not have permission to edit this notice');
+        }
 
         // Update the notice
         $notice->update($validatedData);

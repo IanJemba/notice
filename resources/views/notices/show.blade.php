@@ -21,12 +21,15 @@
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 focus:ring-4 focus:outline-none focus:ring-gray-300">
                     Back to Notices
                 </a>
-                @if (auth()->check() && auth()->user()->role == 'author' && $notice->user_id == auth()->user()->id)
+                @if (auth()->check())
                     <div>
+                        @if ($notice->user_id == auth()->user()->id)
                         <a href="{{ route('notices.edit', $notice->notice_id) }}"
                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-700 bg-blue-200 rounded-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300">
                             Edit
                         </a>
+                        @endif
+                        @if ($notice->user_id == auth()->user()->id || auth()->user()->role == 'admin')
                         <form action="{{ route('notices.destroy', $notice->notice_id) }}" method="POST"
                             class="inline-block ml-2">
                             @csrf
@@ -37,6 +40,7 @@
                                 Delete
                             </button>
                         </form>
+                        @endif
                     </div>
                 @endif
             </div>
@@ -51,22 +55,26 @@
                         <div class="text-gray-700">{{ $comment->content }}</div>
                         <div class="text-sm text-gray-500">by {{ $comment->user->name }} on
                             {{ $comment->created_at->format('M d, Y') }}</div>
-                        @if (auth()->check() && auth()->user()->id == $comment->user_id)
-                            <div class="mt-2">
+                        @if (auth()->check())
+                            <div class="mt-2 flex space-x-2">
+                                @if (auth()->user()->id == $comment->user_id)
                                 <a href="{{ route('comments.edit', $comment->id) }}"
                                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-700 bg-blue-200 rounded-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300">
                                     Edit
                                 </a>
-                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST"
-                                    class="inline-block ml-2">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                                        onclick="return confirm('Are you sure you want to delete this comment?');">
-                                        Delete
-                                    </button>
-                                </form>
+                                @endif
+                                @if (auth()->user()->role == 'admin' || auth()->user()->id == $comment->user_id)
+                                    <form action="{{ route('comments.destroy', $comment->id) }}" method="POST"
+                                        class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                                            onclick="return confirm('Are you sure you want to delete this comment?');">
+                                            Delete
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         @endif
                     </div>

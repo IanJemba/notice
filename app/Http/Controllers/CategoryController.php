@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class CategoryController extends Controller
 {
@@ -49,8 +52,15 @@ class CategoryController extends Controller
 
     function destroy(Category $category)
     {
-        $category->delete();
+        if ($category->notices->count() > 0) {
+            return back()->with('error', 'Category cannot be deleted as it has notices');
+        }
 
+        if (auth::user()->role == 'admin') {
+            return back()->with('error', 'You do not have permission to delete a category');
+        }
+
+        $category->delete();
         return redirect('/categories');
     }
 }

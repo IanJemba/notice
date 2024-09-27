@@ -12,7 +12,7 @@ class CommentController extends Controller
     public function store(Request $request, Notice $notice)
     {
 
- 
+
         $request->validate([
             'content' => 'required|string|max:500',
         ]);
@@ -31,6 +31,11 @@ class CommentController extends Controller
     public function edit($id)
     {
         $comment = Comment::findOrFail($id);
+        $comment_user = $comment->user_id;
+
+        if ($comment_user != Auth::id()) {
+            return redirect()->route('notices.show', $comment->notice_id);
+        }
 
         // Return the edit view with the comment data
         return view('comments.edit', compact('comment'));
@@ -58,8 +63,13 @@ class CommentController extends Controller
         $comment = Comment::findOrFail($id);
         $notice_id = $comment->notice_id;
 
-        $comment->delete();
+        // dd(Auth::user()->role == 'admin');
 
-        return redirect()->route('notices.show', $notice_id)->with('success', 'Comment deleted successfully!');
+        // If not author or admin, deny request and redirect to show
+        if (auth::user()->role == 'admin' || auth::user()->id == $comment->user_id){
+            $comment->delete();
+        }
+
+        return redirect()->route('notices.show', $notice_id);
     }
 }
