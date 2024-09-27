@@ -1,9 +1,6 @@
 <x-app-layout>
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold mb-6 text-center">Notice Board</h1>
-
-
-
         <form action="{{ route('notices.index') }}" method="GET" class="mb-6">
             <div class="flex justify-center mb-6 space-x-4">
                 <input type="text" name="search" placeholder="Search notices by title..."
@@ -25,10 +22,11 @@
         </form>
 
         <div class="text-center mb-6">
-            <a href="{{ route('notices.create') }}"
-                class="inline-flex items-center px-4 py-2 text-lg font-medium text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                + Create New Notice
+            @auth
+            <a href="{{ route('notices.create') }}" class="inline-flex items-center px-4 py-2 text-lg font-medium text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
+            + Create New Notice
             </a>
+            @endauth
         </div>
 
         <!-- Notices Grid -->
@@ -50,14 +48,13 @@
                     $size = $loop->iteration % 3 == 0 ? 'lg:col-span-2' : 'w-full';
                 @endphp
 
-                <div
-                    class="{{ $color }} {{ $size }} p-6 shadow-lg rounded-lg transform hover:scale-105 transition-transform duration-300">
+                <div class="{{ $color }} {{ $size }} p-6 shadow-lg rounded-lg flex flex-col justify-between transform hover:scale-105 transition-transform duration-300">
                     <a href="{{ route('notices.show', $notice->notice_id) }}">
                         <h5 class="mb-2 text-2xl font-bold text-gray-900">{{ $notice->title }}</h5>
                     </a>
                     <p class="mb-4 text-base text-gray-700">{{ Str::limit($notice->description, 120) }}</p>
 
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between mt-auto">
                         <a href="{{ route('notices.show', $notice->notice_id) }}"
                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
                             Read more
@@ -73,8 +70,8 @@
                         <!-- Assuming you have access to the notice variable -->
                         @if (Auth::check())
                             <!-- Check if the user is logged in -->
-                            @if (Auth::user()->role === 'admin' || Auth::user()->id === $notice->user_id)
-                                <!-- Edit Button: Shown for Admins or the Owner of the Notice -->
+                            @if (Auth::user()->id === $notice->user_id)
+                                <!-- Edit Button only shown to Owner of the Notice -->
                                 <a href="{{ route('notices.edit', $notice->notice_id) }}"
                                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-gray-700 bg-blue-200 rounded-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300">
                                     Edit
