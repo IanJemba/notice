@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Marking;
 use App\Models\Notice;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -33,5 +34,6 @@ class DatabaseSeeder extends Seeder
         Category::factory(10)->create();
         Notice::factory(10)->create();
         Comment::factory(15)->create();
+        Marking::factory(15)->create();
     }
 }
