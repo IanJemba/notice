@@ -32,4 +32,9 @@ class Notice extends Model
     {
         return $this->hasMany(Comment::class, 'notice_id');
     }
+
+    public function marks()
+    {
+        return $this->hasMany(Marking::class, 'notice_id');
+    }
 }
