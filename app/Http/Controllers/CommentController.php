@@ -45,7 +45,7 @@ class CommentController extends Controller
     {
         // Validate the request
         $request->validate([
-            'content' => 'required|max:255',
+            'content' => 'required|max:512',
         ]);
 
         // Find the comment and update it
