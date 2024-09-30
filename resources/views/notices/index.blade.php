@@ -21,11 +21,12 @@
             </div>
         </form>
 
-        <div class="text-center mb-6">
+        <div class="text-left mb-6">
             @auth
-            <a href="{{ route('notices.create') }}" class="inline-flex items-center px-4 py-2 text-lg font-medium text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
-            + Create New Notice
-            </a>
+                <a href="{{ route('notices.create') }}"
+                    class="inline-flex items-center px-4 py-2 text-lg font-medium text-white bg-green-600 rounded-lg shadow-md hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                    + Create New Notice
+                </a>
             @endauth
         </div>
 
@@ -48,7 +49,8 @@
                     $size = $loop->iteration % 3 == 0 ? 'lg:col-span-2' : 'w-full';
                 @endphp
 
-                <div class="{{ $color }} {{ $size }} p-6 shadow-lg rounded-lg flex flex-col justify-between transform hover:scale-105 transition-transform duration-300">
+                <div
+                    class="{{ $color }} {{ $size }} p-6 shadow-lg rounded-lg flex flex-col justify-between transform hover:scale-105 transition-transform duration-300">
                     <a href="{{ route('notices.show', $notice->notice_id) }}">
                         <h5 class="mb-2 text-2xl font-bold text-gray-900">{{ $notice->title }}</h5>
                     </a>
