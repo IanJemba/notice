@@ -16,7 +16,7 @@ class MarkingController extends Controller
 
     public function create()
     {
-        if (!Auth::user()->role->name === 'admin') {
+        if (!Auth::user()->role === 'admin') {
             return redirect()->back();
         }
 
@@ -25,7 +25,7 @@ class MarkingController extends Controller
 
     public function edit(Marking $marking)
     {
-        if (!Auth::user()->role->name === 'admin') {
+        if (!Auth::user()->role === 'admin') {
             return redirect()->back();
         }
 
@@ -34,39 +34,53 @@ class MarkingController extends Controller
 
     public function store(Request $request)
     {
-        if (!Auth::user()->role->name === 'admin') {
+        if (!Auth::user()->role === 'admin') {
             return redirect()->back();
         }
 
+        // dd($request->all());
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'color' => 'required|string',
-            'disable_comments' => 'required|boolean',
-            'hide_notice' => 'required|boolean',
+            'color' => 'required|string'
         ]);
+
+        $validatedData['disable_comments'] = $request->has('disable_comments') ? true : false;
+        $validatedData['hide_notice'] = $request->has('hide_notice') ? true : false;
 
         Marking::create($validatedData);
 
-        return redirect()->route('marking.index');
+        return redirect()->route('markings.index');
     }
 
     public function update(Request $request, Marking $marking)
     {
-        if (!Auth::user()->role->name === 'admin') {
+        if (!Auth::user()->role === 'admin') {
             return redirect()->back();
         }
 
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'color' => 'required|string',
-            'disable_comments' => 'required|boolean',
-            'hide_notice' => 'required|boolean',
+            'color' => 'required|string'
         ]);
+
+        $validatedData['disable_comments'] = $request->has('disable_comments') ? true : false;
+        $validatedData['hide_notice'] = $request->has('hide_notice') ? true : false;
 
         $marking->update($validatedData);
 
-        return redirect()->route('marking.index');
+        return redirect()->route('markings.index');
+    }
+
+    public function destroy(Marking $marking)
+    {
+        if (!Auth::user()->role === 'admin') {
+            return redirect()->back();
+        }
+
+        $marking->delete();
+
+        return redirect()->route('markings.index');
     }
 }
