@@ -24,7 +24,7 @@
         <div class="text-left mb-6">
             @auth
                 <a href="{{ route('notices.create') }}"
-                    class="inline-flex items-center px-4 py-2 text-lg font-medium text-white bg-green-600 rounded-lg shadow-md hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                    class="inline-flex items-center px-4 py-2 text-lg font-medium text-white bg-green-400 rounded-lg shadow-md hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
                     + Create New Notice
                 </a>
             @endauth
