@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MarkingController;
 use App\Http\Middleware\CheckAdmin;
 use App\Models\notice;
 
@@ -27,7 +28,11 @@ Route::middleware('auth')->group(function () {
 Route::resource('categories', CategoryController::class);
 Route::resource('notices', NoticeController::class);
 Route::resource('comments', CommentController::class);
+Route::resource('markings', MarkingController::class);
 Route::post('/notices/{notice}/comments', [CommentController::class, 'store'])->name('comments.store');
+
+// marking_update
+Route::post('/notices/{notice}/marking_update', [NoticeController::class, 'marking_update'])->name('notices.marking_update');
 
 
 // Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');

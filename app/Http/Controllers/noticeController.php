@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Notice;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class NoticeController extends Controller
 {
@@ -64,8 +65,10 @@ class NoticeController extends Controller
         // Automatically set the logged-in user as the author
         $validatedData['user_id'] = Auth::id();
 
+
         // Create a new notice
-        Notice::create($validatedData);
+        $notice = Notice::create($validatedData);
+        $notice->markings()->sync(1);
 
         // Redirect to the notices index page with success message
         return redirect()->route('notices.index')->with('success', 'Notice created successfully');
@@ -120,5 +123,16 @@ class NoticeController extends Controller
 
         // Redirect to the notices index page with success message
         return redirect()->route('notices.index')->with('success', 'Notice deleted successfully');
+    }
+
+    public function marking_update(Request $request, Notice $notice)
+    {
+        if (!isset($request['marking_id'])) {
+            $request['marking_id'] = [1]; // Default to unmarked
+        }
+        $notice->markings()->sync($request['marking_id']);
+
+        // Redirect back to the notice page with a success message
+        return redirect()->route('notices.show', $notice->notice_id)->with('success', 'Marking updated successfully');
     }
 }
