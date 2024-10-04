@@ -32,9 +32,6 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory(10)->create();
         Category::factory(10)->create();
-        Notice::factory(10)->create();
-        Comment::factory(15)->create();
-
         Marking::factory()->create([
             'name' => 'Open',
             'description' => 'This notice is open for discussion',
@@ -66,5 +63,8 @@ class DatabaseSeeder extends Seeder
             'disable_comments' => false,
             'hide_notice' => false,
         ]);
+
+        Notice::factory(10)->create();
+        Comment::factory(15)->create();
     }
 }
