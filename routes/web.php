@@ -31,6 +31,9 @@ Route::resource('comments', CommentController::class);
 Route::resource('markings', MarkingController::class);
 Route::post('/notices/{notice}/comments', [CommentController::class, 'store'])->name('comments.store');
 
+// marking_update
+Route::post('/notices/{notice}/marking_update', [NoticeController::class, 'marking_update'])->name('notices.marking_update');
+
 
 // Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 // Route::get('/admin/statistics', [AdminController::class, 'statistics'])->name('admin.statistics');

@@ -2,10 +2,51 @@
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-4xl font-extrabold mb-6 text-gray-900">{{ $notice->title }}</h1>
-            <p class="text-lg text-gray-600 leading-relaxed mb-6">{{ $notice->description }}</p>
+            <div class="flex flex-row m-1">
+                @foreach ($notice->markings as $marking)
+                <div style="background-color: {{ $marking->color }}" class="text-sm rounded-full mr-1"> {{ $marking->name }} </div>
+                @endforeach
 
+                {{-- Add marking dropdown --}}
+                <div>
+                    <div class="dropdown relative">
+                        <button id="dropdownButton" class="bg-gray-200 w-32 h-6 rounded-full mr-1">Add Marking +</button>
+                        <div id="dropdownContent" class="dropdown-content absolute hidden bg-white border border-gray-300 rounded-lg">
+                            <form action="{{ route('notices.marking_update', $notice->notice_id) }}" method="POST">
+                                @csrf
+                                @php
+                                    $markings = App\Models\Marking::all();
+                                @endphp
+                                @foreach ($markings as $marking)
+                                <div>
+                                    <input type="checkbox" name="marking_id[]" value="{{ $marking->id }}"
+                                    @if($notice->markings->contains($marking->id)) checked @endif>
+                                    <label for="marking_id">{{ $marking->name }}</label>
+                                </div>
+                                @endforeach
+                                <button type="submit" class="bg-blue-500 text-white px-2 py-1 rounded-lg w-full">Add</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    const dropdownButton = document.getElementById('dropdownButton');
+                    const dropdownContent = document.getElementById('dropdownContent');
+
+                    dropdownButton.addEventListener('click', function() {
+                        dropdownContent.classList.toggle('hidden');
+                    });
+
+                    document.addEventListener('click', function(event) {
+                    if (!dropdownButton.contains(event.target) && !dropdownContent.contains(event.target)) {
+                        dropdownContent.classList.add('hidden');
+                    }
+                    });
+                </script>
+            </div>
             <div class="mb-6">
                 <h2 class="text-xl font-semibold text-gray-800 mb-3">Details</h2>
+
                 <div class="flex flex-wrap items-center space-x-2">
                     <p class="inline-block bg-blue-100 text-blue-800 px-3 py-1 text-sm font-semibold rounded-full">
                         Category: {{ $notice->category->title }}
@@ -17,7 +58,7 @@
                     </p>
                 </div>
             </div>
-
+            <p class="text-lg text-gray-600 leading-relaxed mb-6">{{ $notice->description }}</p>
             <div class="flex items-center justify-between mt-8">
                 <a href="{{ route('notices.index') }}"
                     class="inline-flex items-center px-4 py-2 text-base font-medium text-white bg-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300">

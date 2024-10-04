@@ -33,9 +33,9 @@ class Notice extends Model
         return $this->hasMany(Comment::class, 'notice_id');
     }
 
-    public function marking()
+    public function markings()
     {
-        return $this->belongsToMany(Marking::class, 'markingnotice');
+        return $this->belongsToMany(Marking::class, 'marking_notice', 'notice_id', 'marking_id');
     }
 
 

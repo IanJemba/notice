@@ -38,7 +38,7 @@ class MarkingController extends Controller
             return redirect()->back();
         }
 
-        // dd($request->all());
+        dd($request->all());
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',

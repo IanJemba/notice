@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('marking_notice', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('marking_id')->constrained();
-            $table->foreignId('notice_id')->constrained();
+            $table->foreignId('marking_id')->constrained()->onDelete('cascade');
+
+            // Add a foreign key to the notices table, but in a different way because the primary key is different
+            $table->unsignedBigInteger('notice_id');
+            $table->foreign('notice_id')->references('notice_id')->on('notices')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

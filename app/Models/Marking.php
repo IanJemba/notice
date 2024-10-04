@@ -19,7 +19,7 @@ class Marking extends Model
 
     public function notices()
     {
-        return $this->belongsToMany(Notice::class, 'markingnotice');
+        return $this->belongsToMany(Notice::class, 'marking_notice');
     }
 
 }
