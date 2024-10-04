@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Marking;
 use App\Models\Notice;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -31,6 +32,38 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory(10)->create();
         Category::factory(10)->create();
+        Marking::factory()->create([
+            'name' => 'Open',
+            'description' => 'This notice is open for discussion',
+            'color' => '#00ff00',
+            'disable_comments' => false,
+            'hide_notice' => false,
+        ]);
+
+        Marking::factory()->create([
+            'name' => 'Closed',
+            'description' => 'This notice is closed',
+            'color' => '#FF5733',
+            'disable_comments' => true,
+            'hide_notice' => false,
+        ]);
+
+        Marking::factory()->create([
+            'name' => 'Archived',
+            'description' => 'This notice is archived',
+            'color' => '#FFFF00',
+            'disable_comments' => true,
+            'hide_notice' => true,
+        ]);
+
+        Marking::factory()->create([
+            'name' => 'Important',
+            'description' => 'This notice is important',
+            'color' => '#FFD700',
+            'disable_comments' => false,
+            'hide_notice' => false,
+        ]);
+
         Notice::factory(10)->create();
         Comment::factory(15)->create();
     }

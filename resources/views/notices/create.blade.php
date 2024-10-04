@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4 py-8 w-1/2">
         <h1 class="text-3xl font-bold mb-4">Create New Notice</h1>
 
         <form action="{{ route('notices.store') }}" method="POST">

@@ -9,23 +9,34 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 shadow-md text-gray-900">
-                    <h2 class="text-2xl font-semibold text-indigo-700 mb-4">Welcome, <strong>{{ Auth::user()->name }}</strong>!</h2>
+                    <h2 class="text-2xl font-semibold text-indigo-700 mb-4">Welcome,
+                        <strong>{{ Auth::user()->name }}</strong>!
+                    </h2>
                     <p class="text-gray-700 leading-relaxed">
-                        This is your dashboard. From here, you can modify your profile, post notices, and stay updated with the latest news.
+                        This is your dashboard. From here, you can modify your profile, post notices, and stay updated
+                        with the latest news.
                     </p>
                     <ul class="flex flex-col sm:flex-row">
-                        <li><a class="bg-indigo-600 hover:bg-indigo-700 text-white sm:rounded-lg m-2 p-3 block transition duration-300 ease-in-out shadow hover:shadow-lg" href="{{ route('notices.create') }}">Create a Notice</a></li>
-                        <li><a class="bg-indigo-600 hover:bg-indigo-700 text-white sm:rounded-lg m-2 p-3 block transition duration-300 ease-in-out shadow hover:shadow-lg" href="{{ route('notices.index') }}">Look at Notices</a></li>
+                        <li><a class="bg-indigo-600 hover:bg-indigo-700 text-white sm:rounded-lg m-2 p-3 block transition duration-300 ease-in-out shadow hover:shadow-lg"
+                                href="{{ route('notices.create') }}">Create a Notice</a></li>
+                        <li><a class="bg-indigo-600 hover:bg-indigo-700 text-white sm:rounded-lg m-2 p-3 block transition duration-300 ease-in-out shadow hover:shadow-lg"
+                                href="{{ route('notices.index') }}">Look at Notices</a></li>
                     </ul>
                 </div>
 
                 <div class="p-6 shadow-md text-gray-900">
                     <h2 class="text-2xl font-semibold text-indigo-700 mb-4">Rules of the Notice Board</h2>
                     <ul class="list-disc list-inside space-y-2 text-gray-700">
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                        <li>Staples should not be used for posting notices or posters as they damage the noticeboards.
+                            Stapled notices will be removed and offending clubs or groups may be fined.</li>
+                        <li>Notices and posters from non-student clubs or societies will require a stamp from the Office
+                            of
+                            the Chief Operations Officer prior to being placed on any general noticeboard on campus. The
+                            COO's office can be contacted at Ext. 8257 or 5118.</li>
+                        <li>Recognised clubs and societies wishing to obtain a designated noticeboard should contact the
+                            Student Union Office in the Hub. </li>
+                        <li>Notices and posters should be posted only on the appropriate notice board or on noticeboards
+                            designated 'General Notices'. They should not be put on walls, doors or windows.</li>
                     </ul>
                 </div>
                 <div class="p-6 shadow-md text-gray-900">
@@ -36,14 +47,17 @@
                             <a href="{{ route('notices.show', $latestNotice->notice_id) }}">
                                 <h5 class="mb-2 text-2xl font-bold text-gray-900">{{ $latestNotice->title }}</h5>
                             </a>
-                            <p class="mb-4 text-base text-gray-700">{{ Str::limit($latestNotice->description, 120) }}</p>
+                            <p class="mb-4 text-base text-gray-700">{{ Str::limit($latestNotice->description, 120) }}
+                            </p>
 
                             <div class="flex items-center justify-between">
                                 <a href="{{ route('notices.show', $latestNotice->notice_id) }}"
                                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Read more
-                                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                                     </svg>
                                 </a>
                             </div>
