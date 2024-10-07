@@ -50,7 +50,6 @@ Route::post('/notices/{notice}/marking_update', [NoticeController::class, 'marki
 Route::middleware([CheckAdmin::class])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin/statistics', [AdminController::class, 'statistics'])->name('admin.statistics');
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
     Route::get('/admin/users/create', [AdminController::class, 'userCreate'])->name('admin.users.create');
     Route::get('/admin/users/{id}/edit', [AdminController::class, 'userEdit'])->name('admin.users.edit');
