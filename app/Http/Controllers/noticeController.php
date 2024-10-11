@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\NoticeStoreRequest;
 use App\Models\Category;
 use App\Models\Notice;
 use App\Models\User;
@@ -48,29 +49,19 @@ class NoticeController extends Controller
     }
 
     // Store a newly created notice in storage
-    public function store(Request $request)
+    public function store(NoticeStoreRequest $request)
     {
-        // Validate request data
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-        ]);
-
-        // verify if user is logged in
         if (!Auth::check()) {
             return redirect()->route('notices.index')->with('error', 'You must be logged in to create a notice');
         }
 
-        // Automatically set the logged-in user as the author
-        $validatedData['user_id'] = Auth::id();
+        $validatedData = $request->validated();
 
 
-        // Create a new notice
-        $notice = Notice::create($validatedData);
+        $notice = Notice::create(array_merge($validatedData, ['user_id' => Auth::id()]));
+
         $notice->markings()->sync(1);
 
-        // Redirect to the notices index page with success message
         return redirect()->route('notices.index')->with('success', 'Notice created successfully');
     }
 
@@ -94,24 +85,13 @@ class NoticeController extends Controller
     }
 
     // Update the specified notice in storage
-    public function update(Request $request, Notice $notice)
+    public function update(NoticeStoreRequest $request, Notice $notice)
     {
-        // Validate request data
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'user_id' => 'required|exists:users,id',  // Ensure user exists
-            'category_id' => 'required|exists:categories,id',  // Ensure category exists
-        ]);
-
         if (Auth::id() !== $notice->user_id) {
             return redirect()->route('notices.show', $notice->notice_id)->with('error', 'You do not have permission to edit this notice');
         }
 
-        // Update the notice
-        $notice->update($validatedData);
-
-        // Redirect to the notices index page with success message
+        $notice->update($request->validated());
         return redirect()->route('notices.index')->with('success', 'Notice updated successfully');
     }
 

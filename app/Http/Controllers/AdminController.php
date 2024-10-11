@@ -52,8 +52,11 @@ class AdminController extends Controller
 
     public function userDestroy(Request $request)
     {
+
         $user = User::find($request->id);
+        $user->notices()->delete(); 
         $user->delete();
+
 
         return redirect('/admin/users');
     }
@@ -78,7 +81,7 @@ class AdminController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 

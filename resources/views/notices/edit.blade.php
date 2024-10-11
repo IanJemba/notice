@@ -1,7 +1,15 @@
 <x-app-layout>
     <div class="container mx-auto px-4 py-8 w-1/2">
         <h1 class="text-3xl font-bold mb-4">Edit Notice</h1>
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('notices.update', $notice->notice_id) }}" method="POST">
             @csrf
             @method('PUT')
