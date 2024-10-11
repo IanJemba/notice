@@ -87,7 +87,6 @@ class AdminController extends Controller
 
     public function userStore(AdminRequest $request)
     {
-
         $userData = array_merge($request->validated(), ['role' => isset($request->is_admin) ? 'admin' : 'user']);
 
         $user = User::create($userData);

@@ -26,8 +26,7 @@ class AdminRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'password' => 'required|string|min:8|confirmed',
-            'password_confirmation' => 'required|string|min:8',
-            'role' => 'required|string|max:50',
+
         ];
     }
 }
