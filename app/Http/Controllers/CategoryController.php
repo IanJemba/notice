@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,12 +22,12 @@ class CategoryController extends Controller
         return view('categories.create');
     }
 
-    function store()
+    function store(CategoryRequest $request)
     {
-        $category_data = request()->all();
+        $request->validated();
 
-        $title = $category_data['title'];
-        $description = $category_data['description'];
+        $title = $request['title'];
+        $description = $request['description'];
 
         $category = new Category();
         $category->title = $title;
@@ -41,10 +42,12 @@ class CategoryController extends Controller
         return view('categories.edit', compact('category'));
     }
 
-    function update(Category $category)
+    function update(CategoryRequest $request, Category $category)
     {
-        $category->title = request('title');
-        $category->description = request('description');
+        $request->validated();
+
+        $category->title = $request['title'];
+        $category->description = $request['description'];
         $category->save();
 
         return redirect('/categories');
