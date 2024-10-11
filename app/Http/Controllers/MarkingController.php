@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MarkingRequest;
 use Illuminate\Http\Request;
 use App\Models\Marking;
 use Illuminate\Support\Facades\Auth;
@@ -32,43 +33,24 @@ class MarkingController extends Controller
         return view('marking.edit', compact('marking'));
     }
 
-    public function store(Request $request)
+    public function store(MarkingRequest $request)
     {
-        if (!Auth::user()->role === 'admin') {
-            return redirect()->back();
-        }
+        $request->validated();
 
-        // dd($request->all());
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'color' => 'required|string'
-        ]);
-
-        $validatedData['disable_comments'] = $request->has('disable_comments') ? true : false;
-        $validatedData['hide_notice'] = $request->has('hide_notice') ? true : false;
-
-        Marking::create($validatedData);
+        $request['disable_comments'] = $request->has('disable_comments') ? true : false;
+        $request['hide_notice'] = $request->has('hide_notice') ? true : false;
+        Marking::create($request->all());
 
         return redirect()->route('markings.index');
     }
 
-    public function update(Request $request, Marking $marking)
+    public function update(MarkingRequest $request, Marking $marking)
     {
-        if (!Auth::user()->role === 'admin') {
-            return redirect()->back();
-        }
+        $request->validated();
+        $request['disable_comments'] = $request->has('disable_comments') ? true : false;
+        $request['hide_notice'] = $request->has('hide_notice') ? true : false;
 
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'color' => 'required|string'
-        ]);
-
-        $validatedData['disable_comments'] = $request->has('disable_comments') ? true : false;
-        $validatedData['hide_notice'] = $request->has('hide_notice') ? true : false;
-
-        $marking->update($validatedData);
+        $marking->update($request->all());
 
         return redirect()->route('markings.index');
     }
