@@ -21,7 +21,14 @@ class AdminController extends Controller
     // Main dashboard
     public function index()
     {
-        return view('admin.dashboard');
+        $statistics = [
+            'users' => User::count(),
+            'notices' => Notice::count(),
+            'comments' => Comment::count(),
+            'categories' => Category::count(),
+        ];
+
+        return view('admin.dashboard', compact('statistics'));
     }
 
     // User management
@@ -47,8 +54,11 @@ class AdminController extends Controller
 
     public function userDestroy(Request $request)
     {
+
         $user = User::find($request->id);
+        $user->notices()->delete();
         $user->delete();
+
 
         return redirect('/admin/users');
     }
@@ -66,18 +76,6 @@ class AdminController extends Controller
         $user->save();
 
         return redirect('/admin/users');
-    }
-
-    public function statistics(): View
-    {
-        $statistics = [
-            'users' => User::count(),
-            'notices' => Notice::count(),
-            'comments' => Comment::count(),
-            'categories' => Category::count(),
-        ];
-
-        return view('admin.statistics', compact('statistics'));
     }
 
     public function userCreate()

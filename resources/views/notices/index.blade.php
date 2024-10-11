@@ -1,7 +1,17 @@
 <x-app-layout>
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-4xl font-bold mb-6 text-center">Notice Board</h1>
+
         <form action="{{ route('notices.index') }}" method="GET" class="mb-6">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="flex justify-center mb-6 space-x-4">
                 <input type="text" name="search" placeholder="Search notices by title..."
                     class="block w-1/3 border-gray-300 rounded-md shadow-sm" value="{{ request('search') }}">
