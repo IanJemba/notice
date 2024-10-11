@@ -48,7 +48,6 @@ class CommentController extends Controller
             'content' => 'required|max:512',
         ]);
 
-        // Find the comment and update it
         $comment = Comment::findOrFail($id);
         $comment->content = $request->input('content');
         $comment->save();

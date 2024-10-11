@@ -9,10 +9,12 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminRequest;
 use App\Models\User;
 use App\Models\Notice;
 use App\Models\Comment;
 use App\Models\Category;
+use Illuminate\View\View;
 
 class AdminController extends Controller
 {
@@ -51,18 +53,22 @@ class AdminController extends Controller
         return redirect('/admin/users');
     }
 
-    public function userUpdate(Request $request)
+    public function userUpdate(AdminRequest $request)
     {
-        $user = User::find($request->id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->role = $request->role;
+
+        $request->validated();
+
+        $user = User::findOrFail($request->id);
+
+        $user->name = $request['name'];
+        $user->email = $request['email'];
+        $user->role = $request['role'];
         $user->save();
 
         return redirect('/admin/users');
     }
 
-    public function statistics()
+    public function statistics(): View
     {
         $statistics = [
             'users' => User::count(),
@@ -79,21 +85,12 @@ class AdminController extends Controller
         return view('admin.user.create');
     }
 
-    public function userStore(Request $request): RedirectResponse
+    public function userStore(AdminRequest $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
 
-        $admin = isset($request->is_admin) ? 'admin' : 'user';
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $admin,
-        ]);
+        $userData = array_merge($request->validated(), ['role' => isset($request->is_admin) ? 'admin' : 'user']);
+
+        $user = User::create($userData);
 
         event(new Registered($user));
         return redirect('/admin/users');
