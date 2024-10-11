@@ -127,12 +127,15 @@ class NoticeController extends Controller
 
     public function marking_update(Request $request, Notice $notice)
     {
+        if (!Auth::check()) {
+            return redirect()->route('notices.show', $notice->notice_id);
+        }
+
         if (!isset($request['marking_id'])) {
             $request['marking_id'] = [1]; // Default to unmarked
         }
         $notice->markings()->sync($request['marking_id']);
 
-        // Redirect back to the notice page with a success message
-        return redirect()->route('notices.show', $notice->notice_id)->with('success', 'Marking updated successfully');
+        return redirect()->route('notices.show', $notice->notice_id);
     }
 }

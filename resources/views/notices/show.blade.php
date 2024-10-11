@@ -4,45 +4,51 @@
             <h1 class="text-4xl font-extrabold mb-6 text-gray-900">{{ $notice->title }}</h1>
             <div class="flex flex-row m-1">
                 @foreach ($notice->markings as $marking)
-                <div style="background-color: {{ $marking->color }}" class="text-sm rounded-full mr-1"> {{ $marking->name }} </div>
+                    <div class="text-sm rounded-full mr-1 p-1 px-3" style="background-color: {{ $marking->color }};">
+                        <span class="font-semibold">{{ $marking->name }}</span>
+                    </div>
                 @endforeach
 
-                {{-- Add marking dropdown --}}
-                <div>
-                    <div class="dropdown relative">
-                        <button id="dropdownButton" class="bg-gray-200 w-32 h-6 rounded-full mr-1">Add Marking +</button>
-                        <div id="dropdownContent" class="dropdown-content absolute hidden bg-white border border-gray-300 rounded-lg">
-                            <form action="{{ route('notices.marking_update', $notice->notice_id) }}" method="POST">
-                                @csrf
-                                @php
-                                    $markings = App\Models\Marking::all();
-                                @endphp
-                                @foreach ($markings as $marking)
-                                <div>
-                                    <input type="checkbox" name="marking_id[]" value="{{ $marking->id }}"
-                                    @if($notice->markings->contains($marking->id)) checked @endif>
-                                    <label for="marking_id">{{ $marking->name }}</label>
-                                </div>
-                                @endforeach
-                                <button type="submit" class="bg-blue-500 text-white px-2 py-1 rounded-lg w-full">Add</button>
-                            </form>
+                @auth
+                    {{-- Add marking dropdown --}}
+                    <div>
+                        <div class="dropdown relative">
+                            <button id="dropdownButton" class="bg-gray-200 w-32 h-6 rounded-full mr-1">Add Marking +</button>
+                            <div id="dropdownContent"
+                                class="dropdown-content absolute hidden bg-white border border-gray-300 rounded-lg">
+                                <form action="{{ route('notices.marking_update', $notice->notice_id) }}" method="POST">
+                                    @csrf
+                                    @php
+                                        $markings = App\Models\Marking::all();
+                                    @endphp
+                                    @foreach ($markings as $marking)
+                                        <div>
+                                            <input type="checkbox" name="marking_id[]" value="{{ $marking->id }}"
+                                                @if ($notice->markings->contains($marking->id)) checked @endif>
+                                            <label for="marking_id">{{ $marking->name }}</label>
+                                        </div>
+                                    @endforeach
+                                    <button type="submit"
+                                        class="bg-blue-500 text-white px-2 py-1 rounded-lg w-full">Add</button>
+                                </form>
+                            </div>
                         </div>
+                        <script>
+                            const dropdownButton = document.getElementById('dropdownButton');
+                            const dropdownContent = document.getElementById('dropdownContent');
+
+                            dropdownButton.addEventListener('click', function() {
+                                dropdownContent.classList.toggle('hidden');
+                            });
+
+                            document.addEventListener('click', function(event) {
+                                if (!dropdownButton.contains(event.target) && !dropdownContent.contains(event.target)) {
+                                    dropdownContent.classList.add('hidden');
+                                }
+                            });
+                        </script>
                     </div>
-                </div>
-                <script>
-                    const dropdownButton = document.getElementById('dropdownButton');
-                    const dropdownContent = document.getElementById('dropdownContent');
-
-                    dropdownButton.addEventListener('click', function() {
-                        dropdownContent.classList.toggle('hidden');
-                    });
-
-                    document.addEventListener('click', function(event) {
-                    if (!dropdownButton.contains(event.target) && !dropdownContent.contains(event.target)) {
-                        dropdownContent.classList.add('hidden');
-                    }
-                    });
-                </script>
+                @endauth
             </div>
             <div class="mb-6">
                 <h2 class="text-xl font-semibold text-gray-800 mb-3">Details</h2>
@@ -101,10 +107,10 @@
                         @if (auth()->check())
                             <div class="mt-2 flex space-x-2">
                                 @if (auth()->user()->id == $comment->user_id)
-                                <a href="{{ route('comments.edit', $comment->id) }}"
-                                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                                    Edit
-                                </a>
+                                    <a href="{{ route('comments.edit', $comment->id) }}"
+                                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                                        Edit
+                                    </a>
                                 @endif
                                 @if (auth()->user()->role == 'admin' || auth()->user()->id == $comment->user_id)
                                     <form action="{{ route('comments.destroy', $comment->id) }}" method="POST"
