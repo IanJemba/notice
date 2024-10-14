@@ -19,7 +19,7 @@
                             <label for="color" class="block text-gray-700 text-sm font-bold mb-2">Color</label>
                             <input type="color" name="color" id="color" value="#4f46e5" class="shadow appearance-none border rounded h-14 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
-                        <div class="mb-4">
+                        {{-- <div class="mb-4">
                             <p class="text-gray-700 font-bold">This marking will:</p>
                             <div class="flex items-center">
                                 <input type="checkbox" name="disable_comments" id="disable_comments" class="mr-2">
@@ -29,7 +29,7 @@
                                 <input type="checkbox" name="hide_notice" id="hide_notice" class="mr-2">
                                 <label for="hide_notice" class="text-gray-700 text-sm font-bold">Hide Notice</label>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="mb-4">
                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Create</button>
                         </div>
