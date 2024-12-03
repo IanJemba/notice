@@ -34,7 +34,8 @@ class NoticeFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Notice $notice) {
-            $notice->markings()->attach(1);
+            $marking = Marking::firstOrCreate(['id' => 1], ['name' => 'Open'], ['color' => '#000000']);
+            $notice->markings()->attach($marking->id);
         });
     }
 }
