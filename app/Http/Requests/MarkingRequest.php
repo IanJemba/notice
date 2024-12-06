@@ -13,7 +13,7 @@ class MarkingRequest extends FormRequest
     public function authorize(): bool
     {
         if (Auth::user()->role != 'admin') {
-            abort(403, 'Unauthorized action.');
+            abort(403);
         }
         return true;
     }
