@@ -83,3 +83,17 @@ test('correct password must be provided to delete account', function () {
 
     $this->assertNotNull($user->fresh());
 });
+
+test('a normal user is not an admin', function () {
+    $user = User::factory()->create();
+
+    $this->assertFalse($user->isAdmin());
+});
+
+test('an admin user is an admin', function () {
+    $user = User::factory()->create([
+        'role' => 'admin',
+    ]);
+
+    $this->assertTrue($user->isAdmin());
+});
