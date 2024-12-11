@@ -21,6 +21,6 @@ class CheckAdmin
             return $next($request);
         }
 
-        return redirect()->route('notices.index')->with('error', 'You do not have admin access.');
+        abort(403);
     }
 }
