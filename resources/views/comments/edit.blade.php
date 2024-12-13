@@ -6,7 +6,7 @@
 
             <form action="{{ route('comments.update', $comment->id) }}" method="POST">
                 @csrf
-                @method('PUT')
+                @method('PATCH')
                 <div class="mb-4">
                     <label for="content" class="block text-sm font-medium text-gray-700">Comment:</label>
                     <textarea id="content" name="content" rows="3"
