@@ -38,8 +38,6 @@ Route::middleware([CheckAdmin::class])->group(function () {
 });
 
 // Paths for notices
-Route::get('/notices', [NoticeController::class, 'index'])->name('notices.index');
-Route::get('/notices/{notice}', [NoticeController::class, 'show'])->name('notices.show');
 Route::middleware([CheckUser::class])->group(function () {
     Route::get('/notices/{notice}/edit', [NoticeController::class, 'edit'])->name('notices.edit');
     Route::patch('/notices/{notice}', [NoticeController::class, 'update'])->name('notices.update');
@@ -50,14 +48,18 @@ Route::middleware([CheckUser::class])->group(function () {
     Route::post('/notices', [NoticeController::class, 'store'])->name('notices.store');
     Route::post('/notices/{notice}/marking_update', [NoticeController::class, 'marking_update'])->name('notices.marking_update');
 });
+Route::get('/notices', [NoticeController::class, 'index'])->name('notices.index');
+Route::get('/notices/{notice}', [NoticeController::class, 'show'])->name('notices.show');
 
 
 // Paths for comments
 Route::middleware([CheckUser::class])->group(function () {
-    Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
-    Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
-    Route::patch('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
-    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    // Route::post('/comments/{notice_id}', [CommentController::class, 'store'])->name('comments.store');
+    // Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+    // Route::patch('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+    // Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+    Route::resource('comments', CommentController::class)->only(['store', 'edit', 'update', 'destroy']);
 });
 
 // Marking paths
