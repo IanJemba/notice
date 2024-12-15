@@ -13,4 +13,9 @@ class Category extends Model
         'title',
         'description',
     ];
+
+    public function notices()
+    {
+        return $this->hasMany(Notice::class);
+    }
 }

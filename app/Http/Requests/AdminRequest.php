@@ -12,6 +12,7 @@ class AdminRequest extends FormRequest
      */
     public function authorize(): bool
     {
+
         return Auth::user()->role == 'admin';
     }
 
@@ -25,8 +26,6 @@ class AdminRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'password' => 'required|string|min:8|confirmed',
-
         ];
     }
 }

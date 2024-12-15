@@ -40,11 +40,6 @@ class NoticeController extends Controller
         $categories = Category::all(); // Get all categories
         $users = User::all();
 
-        // check if logged in
-        if (!Auth::check()) {
-            return redirect()->route('notices.index')->with('error', 'You must be logged in to create a notice');
-        }
-
         return view('notices.create', compact('categories', 'users'));
     }
 

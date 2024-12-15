@@ -55,12 +55,12 @@ class CategoryController extends Controller
 
     function destroy(Category $category)
     {
-        if ($category->notices->count() > 0) {
-            return back()->with('error', 'Category cannot be deleted as it has notices');
+        if (auth::user()->role != 'admin') {
+            abort(403);
         }
 
-        if (auth::user()->role == 'admin') {
-            return back()->with('error', 'You do not have permission to delete a category');
+        if ($category->notices->count() > 0) {
+            return back()->with('error', 'Category cannot be deleted as it has notices');
         }
 
         $category->delete();

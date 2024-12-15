@@ -13,7 +13,12 @@ class CommentController extends Controller
 {
     public function store(CommentRequest $request, Notice $notice)
     {
-        $request->validated();
+
+
+        $request->validate([
+            'content' => 'required|string|max:500',
+        ]);
+
 
         Comment::create($request->all());
         
