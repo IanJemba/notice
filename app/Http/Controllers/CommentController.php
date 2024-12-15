@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
+use App\Http\Requests\MarkingRequest;
 use App\Models\Comment;
 use App\Models\Notice;
 use Illuminate\Http\Request;
@@ -9,22 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    public function store(Request $request, Notice $notice)
+    public function store(CommentRequest $request, Notice $notice)
     {
+        $request->validated();
 
-
-        $request->validate([
-            'content' => 'required|string|max:500',
-        ]);
-
-
-        Comment::create([
-            'content' => $request->input('content'),
-            'notice_id' => $notice->notice_id,
-            'user_id' => Auth::id(),
-        ]);
-
-        // Redirect back to the notice view with success message
+        Comment::create($request->all());
+        
         return redirect()->route('notices.show', $notice->notice_id)->with('success', 'Comment added successfully!');
     }
 
@@ -65,7 +57,7 @@ class CommentController extends Controller
         // dd(Auth::user()->role == 'admin');
 
         // If not author or admin, deny request and redirect to show
-        if (auth::user()->role == 'admin' || auth::user()->id == $comment->user_id){
+        if (auth::user()->role == 'admin' || auth::user()->id == $comment->user_id) {
             $comment->delete();
         }
 
