@@ -14,14 +14,10 @@ class CommentController extends Controller
     public function store(CommentRequest $request, Notice $notice)
     {
 
-
-        $request->validate([
-            'content' => 'required|string|max:500',
-        ]);
-
+        $request->validated();
 
         Comment::create($request->all());
-        
+
         return redirect()->route('notices.show', $notice->notice_id)->with('success', 'Comment added successfully!');
     }
 
