@@ -40,7 +40,7 @@ Route::middleware([CheckAdmin::class])->group(function () {
 // Paths for notices
 Route::middleware([CheckUser::class])->group(function () {
     Route::get('/notices/{notice}/edit', [NoticeController::class, 'edit'])->name('notices.edit');
-    Route::patch('/notices/{notice}', [NoticeController::class, 'update'])->name('notices.update');
+    Route::put('/notices/{notice}', [NoticeController::class, 'update'])->name('notices.update');
     Route::delete('/notices/{notice}', [NoticeController::class, 'destroy'])->name('notices.destroy');
     Route::get('/notices/create', [NoticeController::class, 'create'])->name('notices.create');
     Route::post('/notices', [NoticeController::class, 'store'])->name('notices.store');
