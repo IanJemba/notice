@@ -54,12 +54,13 @@ Route::get('/notices/{notice}', [NoticeController::class, 'show'])->name('notice
 
 // Paths for comments
 Route::middleware([CheckUser::class])->group(function () {
-    // Route::post('/comments/{notice_id}', [CommentController::class, 'store'])->name('comments.store');
-    // Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
-    // Route::patch('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
-    // Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    Route::post('/notices/{notice}/comments', [CommentController::class, 'store'])->name('comments.store');
 
-    Route::resource('comments', CommentController::class)->only(['store', 'edit', 'update', 'destroy']);
+    Route::get('/comments/{comment}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+    Route::patch('/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+    // Route::resource('comments', CommentController::class)->only(['store', 'edit', 'update', 'destroy']);
 });
 
 // Marking paths

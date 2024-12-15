@@ -9,14 +9,16 @@ use App\Models\Notice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class CommentController extends Controller
 {
     public function store(CommentRequest $request, Notice $notice)
     {
+        $validatedData = $request->validated();
+        $validatedData['notice_id'] = $notice->notice_id;
+        $validatedData['user_id'] = Auth::id();
 
-        $request->validated();
-
-        Comment::create($request->all());
+        Comment::create($validatedData);
 
         return redirect()->route('notices.show', $notice->notice_id)->with('success', 'Comment added successfully!');
     }
